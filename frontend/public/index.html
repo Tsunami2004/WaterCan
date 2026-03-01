@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WaterCan - Water Delivery Service</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">💧 WaterCan</div>
+            <div class="nav-links">
+                <a href="#" onclick="showPage('home')" class="nav-link active">Home</a>
+                <a href="#" onclick="logout()" class="nav-link" id="logoutLink" style="display:none;">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Home Page -->
+        <div id="home" class="page active">
+            <div class="home-content">
+                <h1>Welcome to WaterCan</h1>
+                <p>Your trusted water delivery service</p>
+                <div class="auth-buttons">
+                    <button class="btn btn-primary" onclick="showPage('login')">Login</button>
+                    <button class="btn btn-secondary" onclick="showPage('register')">Sign Up</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Login Page -->
+        <div id="login" class="page">
+            <div class="form-container">
+                <h2>Login to WaterCan</h2>
+                <form onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <div class="password-group">
+                            <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                            <button type="button" class="toggle-password" onclick="togglePassword('loginPassword')">👁️</button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+                <p class="toggle-link">Don't have an account? <a href="#" onclick="showPage('register')">Sign Up</a></p>
+            </div>
+        </div>
+
+        <!-- Register Page -->
+        <div id="register" class="page">
+            <div class="form-container">
+                <h2>Sign Up for WaterCan</h2>
+                <form onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label for="regName">Full Name</label>
+                        <input type="text" id="regName" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regEmail">Email</label>
+                        <input type="email" id="regEmail" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regPhone">Phone Number</label>
+                        <input type="tel" id="regPhone" placeholder="Enter your phone number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regPassword">Password</label>
+                        <div class="password-group">
+                            <input type="password" id="regPassword" placeholder="Create a password" required>
+                            <button type="button" class="toggle-password" onclick="togglePassword('regPassword')">👁️</button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </form>
+                <p class="toggle-link">Already have an account? <a href="#" onclick="showPage('login')">Login</a></p>
+            </div>
+        </div>
+
+        <!-- Order Page -->
+        <div id="order" class="page">
+            <div class="form-container">
+                <h2>Place Your Order</h2>
+                <form onsubmit="handleOrder(event)" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="orderQuantity">Number of Cans</label>
+                        <input type="number" id="orderQuantity" min="1" placeholder="How many cans?" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="orderContact">Contact Number</label>
+                        <input type="tel" id="orderContact" placeholder="Your WhatsApp number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="orderLocation">Delivery Location</label>
+                        <input type="text" id="orderLocation" placeholder="House/Shop/Office address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="locationImage">Upload Location Photo</label>
+                        <input type="file" id="locationImage" accept="image/*">
+                        <small>Upload a photo of your house/shop/office for easy identification</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Place Order</button>
+                    <button type="button" class="btn btn-secondary" onclick="showPage('dashboard')">Back to Dashboard</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Dashboard Page -->
+        <div id="dashboard" class="page">
+            <div class="dashboard-header">
+                <h2>Welcome, <span id="userName"></span>!</h2>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn btn-primary" onclick="showPage('order')">New Order</button>
+                    <button class="btn btn-secondary" onclick="showPage('admin')">Admin Panel</button>
+                </div>
+            </div>
+            <div class="orders-container">
+                <h3>Your Orders</h3>
+                <div id="ordersList"></div>
+            </div>
+        </div>
+
+        <!-- Admin Panel -->
+        <div id="admin" class="page">
+            <div class="form-container" style="max-width: none;">
+                <h2>📊 Admin Dashboard - All Orders</h2>
+                <div class="admin-controls">
+                    <button class="btn btn-secondary" onclick="showPage('dashboard')">← Back to Dashboard</button>
+                    <button class="btn btn-primary" onclick="loadAdminOrders()">🔄 Refresh Orders</button>
+                </div>
+                <div id="allOrdersList"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup for messages -->
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closePopup()">&times;</span>
+            <p id="popupMessage"></p>
+            <button class="btn btn-primary" onclick="closePopup()">OK</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
